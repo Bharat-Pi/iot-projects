@@ -27,6 +27,7 @@ void setup() {
   //433E6 for Asia
   //866E6 for Europe
   //915E6 for North America
+  // 866 MHz to 867 MHZ is licensed in India
   while (!LoRa.begin(866E6)) {
     Serial.println(".");
     delay(500);
