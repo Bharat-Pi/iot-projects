@@ -2,7 +2,7 @@
 /**Author
  * Naveen G
  * Refillbot.in
- * Lora transmitter code for BharatPi Lora
+ * Lora transmitter code for BharatPi Lora Edited on 21 Jun 2023
  */
 #include <SPI.h>
 #include <LoRa.h>
