@@ -16,7 +16,7 @@
 #define SerialMon Serial
 
 // Set serial for AT commands (to the module)
-// Use Hardware Serial on Mega, Leonardo, Micro
+// Use Hardware Serial on BharatPi 4G, Mega, Leonardo, Micro
 #ifndef __AVR_ATmega328P__
 #define SerialAT Serial2
 
