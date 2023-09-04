@@ -1,10 +1,31 @@
+/*************************************************************************
+   PROJECT: Bharat Pi 4G Board Sample Code
+   AUTHOR: Refillbot
+ 
+   FUNC: 4G testing with HTTP call to a url and send SMS.
+   SIMCARD: 4G sim cards from Airtel/Vodaphone/Jio/BSNL. 
+   
+   IMPORTANT: Configure the APN accordingly as per your Sim provider
+   TODO: (Before you upload the code to Bharat Pi board) 
+   1) Add phone number(s) 
+   2) Change APN as per your Sim provider
+   3) Setup a test http URL in pipedream.com
+   
+   DESC: This script will connect using 4G sim and send a sms and make a http call 
+   to a test url setup on Pipe Dream. You need to set your own Pipe dream url 
+   and configure the same in this code to be able to receive a call.
+ 
+   COPYRIGHT: Refillbot @MIT license for usage on Bharat Pi boards
+ *************************************************************************/
+
+
 #define TINY_GSM_MODEM_SIM7600 //TINY_GSM_MODEM_SIM7000
 #define TINY_GSM_RX_BUFFER 1024
 
 #define TINY_GSM_TEST_SMS true
-#define SMS_TARGET1  "+919880721666"
-#define SMS_TARGET2  "+918904368386"
-#define SMS_TARGET3  "+919741017076"
+#define SMS_TARGET1  "<Your phone number 1>" //Enter you phone number to which you would like to recevied SMS
+#define SMS_TARGET2  "<Your phone number 2>" //Enter you phone number to which you would like to recevied SMS
+#define SMS_TARGET3  "<Your phone number 3>" //Enter you phone number to which you would like to recevied SMS
 
 #define SerialAT Serial1
 #define SerialMon Serial
@@ -69,20 +90,7 @@ void setup(){
   digitalWrite(LED_PIN, HIGH);
 
   modemPowerOn();
-
-  // Serial.println("========SDCard Detect.======");
-  // SPI.begin(SD_SCLK, SD_MISO, SD_MOSI);
-  // if (!SD.begin(SD_CS)) {
-  //     Serial.println("SDCard MOUNT FAIL");
-  // } else {
-  //   uint32_t cardSize = SD.cardSize() / (1024 * 1024);
-  //   String str = "SDCard Size: " + String(cardSize) + "MB";
-  //   Serial.println(str);
-  // }
-  // Serial.println("===========================");
-
   SerialAT.begin(UART_BAUD, SERIAL_8N1, PIN_RX, PIN_TX);
-
   Serial.clearWriteError();
   //Serial.flush();
   Serial.println();
@@ -189,12 +197,12 @@ void loop(){
   digitalWrite(LED_PIN, HIGH);
 
   Serial.println();
-  Serial.println("HURRRYYYYY....Device is connected to network.");
+  Serial.println("Yehhh....Device is connected to Sim network.");
   Serial.println();
 
   delay(1000);
-  Serial.println("Inquiring UE system information...");
-   Serial.println();
+  Serial.println("Inquiring UE (User Equipment) system information...");
+  Serial.println();
   modem.sendAT("+CPSI?");
   if (modem.waitResponse(1000L, res) == 1) {
     res.replace(GSM_NL "OK" GSM_NL, "");
@@ -203,7 +211,7 @@ void loop(){
 
   delay(2000);
   Serial.println("Testing the HTTPS Call to pipe drive server...");
-  Serial.println("NOTE: Please ensure to deploy this end point on pipe drive to test: https://eoh623b6wcgwbw8.m.pipedream.net");
+  Serial.println("NOTE: Please ensure to deploy an end point on Pipe Dream (pipedream.com) to test: https://eoh623b6wcgwbw8.m.pipedream.net");
   Serial.println();
   Serial.println();
   Serial.println("MODEM TESTING....");
@@ -217,7 +225,7 @@ void loop(){
   }
   delay(5000);
   Serial.println("Setting call back URL");
-  modem.sendAT("+HTTPPARA=\"URL\",https://eoh623b6wcgwbw8.m.pipedream.net"); //ser call back URL to test 
+  modem.sendAT("+HTTPPARA=\"URL\",https://eoh623b6wcgwbw8.m.pipedream.net"); //set call back URL to test 
   if (modem.waitResponse(10000L) != 1) {
     Serial.println("ERROR: HTTP URL SETTING FAILED!");
     DBG("+HTTPPARA=\"URL\",https://eoh623b6wcgwbw8.m.pipedream.net");
