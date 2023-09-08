@@ -32,7 +32,7 @@
 
 #define GSM_PIN ""
 
-const char apn[]  = "jionet";
+const char apn[]  = "jionet"; //Airtel -> "airtelgprs.com" //BSNL -> "bsnlnet" //Voda -> portalnmms
 const char gprsUser[] = "";
 const char gprsPass[] = "";
 
