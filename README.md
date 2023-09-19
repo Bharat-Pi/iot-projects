@@ -5,10 +5,11 @@ Bharat Pi is an IoT Prototyping platform for students, innovators, startups and 
 1) 4G/LTE module and ESP32 on a single board enabling rapid prototyping of any IoT use case
 2) LoRa module and ESP32 on a single board supporting Smart metering use case
 
-## 1) 4G/LTE GSM Module with ESP32
+## 1) 4G/LTE GSM GNSS Module with ESP32
 (Click on images to zoom)
 
-<img src="https://github.com/Bharat-Pi/iot-projects/assets/133974527/5dfeecf2-b47b-4aab-bcd1-f1f1e4999f0c" width="450" height="400">  <img src="https://github.com/Bharat-Pi/iot-projects/assets/133974527/c8038d4f-5d55-4000-b6f2-7c7eb736ec0b" width="450" height="400">
+<img src="https://github.com/Bharat-Pi/iot-projects/assets/133974527/5dfeecf2-b47b-4aab-bcd1-f1f1e4999f0c" width="450" height="400">  <img src="https://github.com/Bharat-Pi/iot-projects/assets/133974527/c8038d4f-5d55-4000-b6f2-7c7eb736ec0b" width="450" height="400">   <img src="https://github.com/Bharat-Pi/iot-projects/assets/133974527/360eb1ec-ba00-4515-a177-31f64c3a4796" width="400" height="400">
+
 
 ### Bharat Pi 4G/LTE GSM Board Pinout Diagram
 <img src="https://github.com/Bharat-Pi/iot-projects/assets/133974527/3d5a4121-5ccc-4228-ba7c-4822c5eb15ed" width="750" height="700">
@@ -29,4 +30,16 @@ Bharat Pi is an IoT Prototyping platform for students, innovators, startups and 
 
 - Buy from Bharat Pi website: https://bharatpi.net/product/lora-module
 - Buy from Amazon website: https://amzn.eu/d/aiPlyeL
+
+## 3) Node Wi-Fi with Bluetooth
+(Click on images to zoom)
+
+<img width="450" alt="Bharat-Pi-Node-WiFi-Box-Package" src="https://github.com/Bharat-Pi/iot-projects/assets/133974527/560ba96f-9e6a-4a08-b413-c48daec9622d"> <img width="450" alt="Bharat-Pi-Node-WiFi-Box-Package" src="https://github.com/Bharat-Pi/iot-projects/assets/133974527/20155afc-dc3a-46aa-bdbd-8d044e548523">
+
+#### You can buy Node Wi-Fi board here:
+
+- Buy from Bharat Pi website: https://bharatpi.net/product/bharat-pi-node-wifi/
+- Buy from Amazon website: https://amzn.eu/d/g0fTGBa
+
+
 
