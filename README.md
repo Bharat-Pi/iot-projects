@@ -1,5 +1,5 @@
 # IoT Projects
-IoT projects using Bharat Pi for final year students, mini porjects, home automation, IoT training and more.
+IoT projects using Bharat Pi for final year students, mini projects, home automation, IoT training and more.
 
 Bharat Pi is an IoT Prototyping platform for students, innovators, startups and enterprises. The Bharat Pi board has two variants: 
 1) 4G/LTE module and ESP32 on a single board enabling rapid prototyping of any IoT use case
