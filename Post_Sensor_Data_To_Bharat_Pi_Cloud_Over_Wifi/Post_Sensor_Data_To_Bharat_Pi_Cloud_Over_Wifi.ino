@@ -25,6 +25,7 @@
 const char* ssid = "<YOUR_WIFI_SSID>";
 const char* password = "<YOUR_WIFI_PASSWORD>";
 
+
 WiFiClientSecure* client = new WiFiClientSecure;
 
 // Bharat Pi Webhook URL 
