@@ -22,8 +22,8 @@
 #include <WiFiClientSecure.h>
 #include <WebServer.h>
 
-const char* ssid = "<Wifi-SSID>";
-const char* password = "<WIfi-Password>";
+const char* ssid = "<YOUR_WIFI_SSID>";
+const char* password = "<YOUR_WIFI_PASSWORD>";
 
 WiFiClientSecure* client = new WiFiClientSecure;
 
@@ -44,7 +44,7 @@ String sensorData = "00";
 String payload = "";
 
 ///////FLOW SENSOR SPECIFIC VARIABLES//////// CHange this for your sensor
-int pulseCount = 0;
+volatile byte pulseCount = 0;
 float flowRate = 0.0;
 unsigned int flowMilliLitres = 0;
 unsigned long totalMilliLitres = 0;
@@ -89,7 +89,12 @@ const char* rootCACertificate =
   "emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=\n"
   "-----END CERTIFICATE-----\n";
 
-#define SENSOR 23
+#define SENSOR 4
+
+void IRAM_ATTR pulseCounter() {
+  pulseCount++;
+}
+
 
 void setup() {
   Serial.begin(115200);
@@ -122,7 +127,7 @@ void setup() {
   devID = WiFi.macAddress(); //Set device ID
   Serial.print("Device ID set to: ");
   Serial.println(devID);
-
+  attachInterrupt(digitalPinToInterrupt(SENSOR), pulseCounter, FALLING);
 
 }
 
