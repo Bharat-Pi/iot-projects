@@ -163,8 +163,8 @@ void loop(){
   Serial.println();
 
   //Get module manufacturer details
-  String name = modem.getModemName();
-  Serial.println("Modem Name : " + name);
+  String modemName = modem.getModemName();
+  Serial.println("Modem Name : " + modemName);
   delay(1000);
 
   String modemInfo = modem.getModemInfo();
@@ -172,7 +172,7 @@ void loop(){
   delay(1000);
 
   String payload;
-  payloadObj["bharat_pi_4g_module_testing"] = name;
+  payloadObj["bharat_pi_4g_module_testing"] = modemName;
   payloadObj["modemInfo"] = modemInfo;
   serializeJson(payloadObj, payload); //Convert data to json format
   //payload="Bharat Pi 4G Module Testing";
@@ -321,6 +321,59 @@ void loop(){
   #endif
 
   Serial.println("END OF MODEM TESTING");
+
+
+  //******************************************************************************************
+  //
+  //    GPS/GNSS TESTING SAMPLE CODE.
+  //    The below code run only if the 4G module supports GPS/GNSS
+  //    so it is safe to ignore if you are testing only 4G modem
+  //    Bharat Pi 4G boards are available with and wihtout GPS. 
+  //    Kindly check which one you have bought before testing GPS/GNSS code
+  //******************************************************************************************
+
+  //GPS/GNSS Configuration. Below AT commands will power ON the GNSS
+  //Switch GNSS Ports and Assisted GPS, once successfully ready then it make a 
+  //get GPS co-ordinates call.
+  // For full set of GPS/GNSS AT commands refer the documents/manual for Simcom A7672S AT Commands here: https://www.simcom.com/product/A7672X.html
+  
+  //***** IMPORTANT NOTE *******
+  //If you are inside a building or a covered area then you wont be able to get 
+  //any GPS co-orindates, you need to be in open sky to request for GPS data (Lat/Long) 
+  Serial.println("Enabling GPS/GNSS");
+  Serial.println("Checking the model support GPS/GNSS...");
+  if(!modemName.indexOf("FASE")){ //FASE->With GPS/GNSS module
+    Serial.println("Modem doesnt support GPS/GNSS. Exiting.");
+    return;
+  } else {
+    Serial.println("GPS/GNSS is supported!");
+    Serial.println("Powering on GPS/GNSS...");
+    modem.sendAT("+CGNSSPWR=1"); //Power on the GNSS
+    while (modem.waitResponse(1000UL, "+CGNSSPWR: READY!") != 1) {
+      Serial.print(".");
+    }
+    Serial.println("GPS/GNSS Power ON READY!");
+    Serial.println("Switching GPS/GNSS Port");
+    modem.sendAT("+CGNSSPORTSWITCH=1,1"); //Port switch for GNSS. For more details on the AT commands refer the AT command manual for SimCom A7276S 4G Module
+    while (modem.waitResponse(1000UL, "OK") != 1) {
+      Serial.print(".");
+    }
+    Serial.println("GPS/GNSS port switch success");
+    Serial.println("Enabling Assisted GPS");
+    modem.sendAT("+CAGPS"); //Assisted GPS
+    while (modem.waitResponse(1000UL, "+AGPS: success.") != 1) {
+      Serial.print(".");
+    }
+    Serial.println("GNSS assisted GPS success");
+    Serial.println("Fetching GPS co-ordinates...");
+    modem.sendAT("+CGNSSINFO");
+    String gpsLatLong = "";
+    modem.waitResponse(1000UL, gpsLatLong); //Wait and get the latlong response from the CGNSSINFO AT command. (NOTE: Do not attempt to use cold/hot boot AT commands for GPS/GNSS as this might send the GNSS into shutdown and will require you to do a hard power ON. Hard power ON of GNSS is currently not supported on this board so take care before using Cold/Hot boot AT commands.)
+    Serial.print("Lat-Long: ");
+    Serial.println(gpsLatLong);
+    Serial.println("GPS testing ended.");          
+  }
+
 
   while (1) {
     while (SerialAT.available()) {
