@@ -24,7 +24,7 @@
 #define TINY_GSM_RX_BUFFER 1024
 
 #define TINY_GSM_TEST_SMS true
-#define SMS_TARGET1  "9845012345" //Enter you phone number to which you would like to recevied SMS
+#define SMS_TARGET1  "9880721666" //Enter you phone number to which you would like to recevied SMS
 //You can add multiple phone number to get SMS
 //#define SMS_TARGET2  "xxxxxxxxxx" //Enter you phone number to which you would like to recevied SMS
 //#define SMS_TARGET3  "xxxxxxxxxx" //Enter you phone number to which you would like to recevied SMS
@@ -47,6 +47,9 @@ const char gprsPass[] = "";
 //Pipedream which will allow to create a dummy call back URL and send data for testing purpose. 
 //Create your account in Pipedream and deploy a call back URL and assign that url to this variable.
 String send_data_to_url = "https://eogas6eaag50nu2.m.pipedream.net";
+String gpsLatLong = ""; //Get gps lat long 
+
+int timeout = 60; //GPS latch timeout duration. You can increase this value based on your application/need.
 
 #include <TinyGsmClient.h>
 #include <SPI.h>
@@ -110,11 +113,8 @@ void setup(){
   Serial.println("  connected and SIM card is inserted in the SIM slot (back side of the board).");
   Serial.println("/**********************************************************/\n\n");
 
-  delay(10000);
-}
+  delay(5000);
 
-
-void loop(){
   String res;
   Serial.println("Initializing Modem...");
 
@@ -134,7 +134,7 @@ void loop(){
 
   digitalWrite(LED_PIN, LOW); 
 
-  Serial.println("SIMCOMATI command...");
+  Serial.println("Running SIMCOMATI command...");
   modem.sendAT("+SIMCOMATI"); //Get the module information
   modem.waitResponse(1000L, res);
   res.replace(GSM_NL "OK" GSM_NL, "");
@@ -322,7 +322,6 @@ void loop(){
 
   Serial.println("END OF MODEM TESTING");
 
-
   //******************************************************************************************
   //
   //    GPS/GNSS TESTING SAMPLE CODE.
@@ -341,11 +340,11 @@ void loop(){
   //If you are inside a building or a covered area then you wont be able to get 
   //any GPS co-orindates, you need to be in open sky to request for GPS data (Lat/Long) 
   Serial.println("Enabling GPS/GNSS");
-  Serial.println("Checking the model support GPS/GNSS...");
-  if(!modemName.indexOf("FASE")){ //FASE->With GPS/GNSS module
-    Serial.println("Modem doesnt support GPS/GNSS. Exiting.");
+  Serial.println("Checking if modem supports GPS/GNSS...");
+  if(modemName == "A7672S-LASC"){ //FASE->With GPS/GNSS module
+    Serial.println("Modem doesnt support GPS/GNSS, so no need of GPS testing.");
     return;
-  } else {
+  } else if (modemName == "A7672S-FASE"){
     Serial.println("GPS/GNSS is supported!");
     Serial.println("Powering on GPS/GNSS...");
     modem.sendAT("+CGNSSPWR=1"); //Power on the GNSS
@@ -367,14 +366,40 @@ void loop(){
     Serial.println("GNSS assisted GPS success");
     Serial.println("Fetching GPS co-ordinates...");
     modem.sendAT("+CGNSSINFO");
-    String gpsLatLong = "";
     modem.waitResponse(1000UL, gpsLatLong); //Wait and get the latlong response from the CGNSSINFO AT command. (NOTE: Do not attempt to use cold/hot boot AT commands for GPS/GNSS as this might send the GNSS into shutdown and will require you to do a hard power ON. Hard power ON of GNSS is currently not supported on this board so take care before using Cold/Hot boot AT commands.)
-    Serial.print("Lat-Long: ");
+    Serial.print("CGPS INFO: ");
     Serial.println(gpsLatLong);
-    Serial.println("GPS testing ended.");          
+    Serial.println("Awaiting for GPS latch: "); //Awaiti until the GPS latches as we get the Lat Long info
+    
+    //Try GPS latch until timeout
+    for(timeout=30; timeout != 0; timeout--){
+      modem.sendAT("+CGNSSINFO");
+      modem.waitResponse(1000UL, gpsLatLong);
+      if(gpsLatLong.indexOf("+CGNSSINFO: ,,,,,,,,") > 0){
+        Serial.print(".");
+        Serial.print(timeout);
+      } else{
+        Serial.print("**** GPS Latched ****");
+        modem.sendAT("+CGNSSINFO");
+        modem.waitResponse(1000UL, gpsLatLong); //Wait and get the latlong response from the CGNSSINFO AT command. (NOTE: Do not attempt to use cold/hot boot AT commands for GPS/GNSS as this might send the GNSS into shutdown and will require you to do a hard power ON. Hard power ON of GNSS is currently not supported on this board so take care before using Cold/Hot boot AT commands.)
+        Serial.println(gpsLatLong);
+        return;
+      }
+      delay(1000);
+    }
+    if(timeout == 0){
+      Serial.println(">>>>> TIME OUT: GPS Latch timedout. <<<<<<");
+      Serial.println("Please ensure you are outside and have sky visibility in order for GPS to latch initially. Without this the GPS wont latch and latlong will not be available.");
+    }    
+    Serial.println("GPS testing ended.");
+  } else {
+    Serial.println("######### Could not find SIMCOM A7672S Module! ##########");
   }
+  Serial.println(">>>>> End of 4G Module Testing <<<<<<");
+}
 
 
+void loop(){
   while (1) {
     while (SerialAT.available()) {
       SerialMon.write(SerialAT.read());
@@ -382,5 +407,5 @@ void loop(){
     while (SerialMon.available()) {
       SerialAT.write(SerialMon.read());
     }
-  }
+  }    
 }
