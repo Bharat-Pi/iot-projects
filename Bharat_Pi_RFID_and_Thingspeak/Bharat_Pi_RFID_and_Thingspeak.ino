@@ -1,4 +1,6 @@
 /**********************************************************************************
+project: Using RFId
+Owner: Bharat Pi
 RFID Module pin connection
 SDA (SS)	-> GPIO21
 SCK	->  GPIO 18 
@@ -20,13 +22,13 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);  // Create MFRC522 instance.
 
 // Valid UIDs and corresponding student names
 byte validUIDs[][4] = {
-  {0xA3, 0x57, 0xB3, 0x30},  // UID of student 1
-  {0x53, 0x15, 0x57, 0xC8},  // UID of student 2
+  {0xA3, 0x57, 0xB3, 0x30},  // UID of card 1 
+  {0x53, 0x15, 0x57, 0xC8},  // UID of card 2
   // Add more valid UIDs here
 };
 const char* studentNames[] = {
-  "Bharatpi",  // Name of student 1
-  "Welcome",   // Name of student 2
+  "Bharatpi",  // Name of card 1
+  "Welcome",   // Name of card 2
   // Add more student names here
 };
 
