@@ -1,4 +1,6 @@
 /**********************************************************************************
+Project : RFID based project
+owner: Bharat pi
 RFID Module pin connection
 SDA (SS)	-> GPIO21
 SCK	->  GPIO 18 
