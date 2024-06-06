@@ -1,10 +1,17 @@
 /*************************************************************************
    PROJECT: Bharat Pi - TFT ST7735 Display test sample code
    AUTHOR: Bharat Pi
+   CREATED DATE: 26/10/2023
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
    FUNCTION: This is a test of the rotation capabilities of the TFT library
    IMPORTANT: Please ensure the pic configurations below are matching with the display you have. 
    There are multiple versions of ST7735 TFT diplays
-
+   COPYRIGHT: This is a library for the Adafruit 1.8" SPI display.
+    Written by Limor Fried/Ladyada for Adafruit Industries.
+    MIT license, all text above must be included in any redistribution   
+    Code ported to Bharat Pi boards.
+    
    TODO: (Before you upload the code to Bharat Pi board) 
    1) Pin connections as defined in below code
    2) Ensure the following pins from the TFT are connected to respective Bharat Pi Pins: 
@@ -23,15 +30,16 @@
    DESC: This script will connect using 4G sim and send a sms and make a http call 
    to a test url setup on Pipe Dream. You need to set your own Pipe dream url 
    and configure the same in this code to be able to receive a call.
- 
-   COPYRIGHT: 
-    This is a library for the Adafruit 1.8" SPI display.
-    Written by Limor Fried/Ladyada for Adafruit Industries.
-    MIT license, all text above must be included in any redistribution   
-    Code ported to Bharat Pi boards
+
+    REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   26/10/2023 -    0.1.0       -    Initial release of sample script.
+
  *************************************************************************/
 
-//**********************************************************************************
+
 //include library code
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7735.h>
