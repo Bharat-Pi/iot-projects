@@ -1,18 +1,19 @@
-/*
-   TDS Code with Curve fitting data of
+/*************************************************************************
 
+   PROJECT NAME: Bharat Pi TDS monitoring code
+   AUTHOR: Bharat Pi
+   CREATED DATE: 29/08/2023
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.1
 
-  Name: TDS monitoring code for Bharat pi
-  Description: Accurately Measure the TDS values and give it in PPM
-  Author: Naveen.G
-  Version: 1.0.1
-  Created Date: 29 Aug 2023
+   DESCRIPTION: Accurately Measure the TDS values and give it in PPM
 
-  Revision History Table:
-  ------------------------------------------
-  Date      | Firmware Version | Comments
-  ------------------------------------------
-  29 Aug 2023 -    1001         - Changed the code to have a Curve fitting, Measure multiple TDS values with the Meter and note down voltage.
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   29/08/2023   -    0.1.0     -    Initial release of sample script.
+   29/08/2023   -    0.1.1     -    Changed the code to have a Curve fitting, Measure multiple TDS values with the Meter and note down voltage.
                                   Use curve fitting sites like https://atozmath.com/ to identify the values for 4 coefficients
                                   TDS works like having a Cubic relationship with the voltage value : d*x^3 + c*x^2 + b*x + a
 
@@ -32,7 +33,7 @@
   here x is the voltage and y is the TDS value calculated for Bharat Pi
 
 
-*/
+ *************************************************************************/
 
 
 
