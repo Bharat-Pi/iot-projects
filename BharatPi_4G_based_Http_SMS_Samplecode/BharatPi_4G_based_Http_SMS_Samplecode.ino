@@ -1,6 +1,9 @@
 /*************************************************************************
    PROJECT: Bharat Pi 4G Board Sample Code
    AUTHOR: Bharat Pi
+   CREATED DATE: 22/01/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   version: 0.1.0
  
    FUNC: 4G testing with HTTP call to a url and send SMS.
    SIMCARD: 4G sim cards from Airtel/Vodaphone/Jio/BSNL can be used. To test HTTP request ensure you have data plan and sms pack. 
@@ -15,8 +18,13 @@
    DESC: This script will connect using 4G sim and send a sms and make a http call 
    to a test url setup on Pipe Dream. You need to set your own Pipe dream url 
    and configure the same in this code to be able to receive a call.
- 
-   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   22/01/2024 -    0.1.0       -    Initial release of sample script.
+
  *************************************************************************/
 
 
