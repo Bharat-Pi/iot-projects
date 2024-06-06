@@ -1,3 +1,23 @@
+/*************************************************************************
+
+   PROJECT NAME: Bharat Pi Tempereture and Humidity sensor Sample Code
+   AUTHOR: Bharat Pi
+   CREATED DATE: 22/01/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION:  This script will give you the sample testing of tempereture and humidity sensor,
+   which will measures the tempereture and humidty
+   and gives the respective values as output when you run the code.
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   22/01/2024 -    0.1.0       -    Initial release of sample script.
+
+ *************************************************************************/
+
 
 #include <LiquidCrystal_I2C.h>
 #include "DHT.h"
