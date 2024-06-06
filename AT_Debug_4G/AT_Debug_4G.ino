@@ -1,13 +1,21 @@
-/**************************************************************
- * Bharat Pi 4G Board 
- * @Author: Refillbot
- * 
- * AT Debug example 
- * This script tries to auto-detect the baud rate
- * and allows direct AT commands access
- *
- * @Copyright : Refillbot @MIT license for usage on Bharat Pi boards
- **************************************************************/
+/*************************************************************************
+
+   PROJECT NAME: Bharat Pi AT_Debug_4G
+   AUTHOR: Bharat Pi
+   CREATED DATE: 22/01/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION:  AT Debug example, This script tries to auto-detect the baud rate
+   and allows direct AT commands access.
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   22/01/2024 -    0.1.0       -    Initial release of sample script.
+
+ *************************************************************************/
 
 
  #define TINY_GSM_MODEM_A7
