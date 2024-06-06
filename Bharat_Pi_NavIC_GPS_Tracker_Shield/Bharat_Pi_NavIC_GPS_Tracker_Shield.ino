@@ -1,17 +1,20 @@
-/*
-  Name: Bharat Pi NavIC Shield test firmware 
-  Description: NavIC get latlong and other navigation parameters using Bharat Pi NavIC tracker shield.
-  Author: Bharat Pi
-  Version: 1.0
-  Created Date: 25/03/2024
-  
-  Revision History Table: 
-  ------------------------------------------
-  Date      | Firmware Version | Comments
-  ------------------------------------------
-  25/03/2024 -    1.0         - Initial release with Lat long and other nav parameters. Prints to serial monitor. 
+/*************************************************************************
 
-*/
+   PROJECT NAME:  Bharat Pi NavIC Shield test firmware 
+   AUTHOR: Bharat Pi
+   CREATED DATE: 25/03/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION: NavIC get latlong and other navigation parameters using Bharat Pi NavIC tracker shield.
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   25/03/2024 -    0.1.0       -    Initial release with Lat long and other nav parameters. Prints to serial monitor.
+
+ *************************************************************************/
 
 #include <TinyGPS++.h>
 #include <SoftwareSerial.h>
