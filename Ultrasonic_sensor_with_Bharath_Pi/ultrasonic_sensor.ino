@@ -1,3 +1,23 @@
+/*************************************************************************
+   PROJECT NAME:  Bharat Pi Ultrasonic sensor Sample Code
+   AUTHOR: Bharat Pi
+   CREATED DATE: 22/01/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.1
+
+   DESCRIPTION: This script will give you the sample testing of ultrasonic sensor,
+   which will measure the distance and
+   prints the distance values in cm when you run the code.
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   22/01/2024 -    0.1.0       -    Initial release of ultrasonic sensor sample script to read the data
+
+ *************************************************************************/     
+
+
 #include <NewPing.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
