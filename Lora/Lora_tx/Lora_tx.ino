@@ -1,9 +1,20 @@
+/*************************************************************************
 
-/**Author
- * Naveen G
- * Refillbot.in
- * Lora transmitter code for BharatPi Lora Edited on 21 Jun 2023
- */
+   PROJECT NAME: Bharat Pi Lora_tx
+   AUTHOR: Bharat Pi
+   CREATED DATE: 21/06/2023
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION: Bharat Pi Lora_tx
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   21/06/2023 -    0.1.0       -    Initial release of sample script.
+
+ *************************************************************************/
 #include <SPI.h>
 #include <LoRa.h>
 
