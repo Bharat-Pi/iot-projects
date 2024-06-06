@@ -1,3 +1,22 @@
+/*************************************************************************
+
+   PROJECT NAME: Bharat Pi pir_sensor sample code
+   AUTHOR: Bharat Pi
+   CREATED DATE: 22/10/2023
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION: Bharat Pi pir_sensor sample code
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   22/10/2023 -    0.1.0       -    Initial release of sample script.
+
+ *************************************************************************/
+
+
 int led = 32;                // the pin that the LED is atteched to
 int sensor = 23;              // the pin that the sensor is atteched to
 int state = HIGH;             // by default, no motion detected
