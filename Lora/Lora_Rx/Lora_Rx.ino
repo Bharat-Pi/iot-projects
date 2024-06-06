@@ -2,7 +2,7 @@
 
    PROJECT NAME: Bharat Pi Lora_Rx
    AUTHOR: Bharat Pi
-   CREATED DATE: 22/01/2024
+   CREATED DATE: 21/06/2023
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
    VERSION: 0.1.0
 
@@ -12,7 +12,7 @@
    ------------------------------------------
    Date      | Firmware Version | Comments
    ------------------------------------------
-   22/01/2024 -    0.1.0       -    Initial release of sample script.
+  21/06/2023 -    0.1.0       -    Initial release of sample script.
 
  *************************************************************************/
 
