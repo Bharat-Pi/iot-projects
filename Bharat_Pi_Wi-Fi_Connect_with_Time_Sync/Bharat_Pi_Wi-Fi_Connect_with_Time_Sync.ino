@@ -1,3 +1,22 @@
+/*************************************************************************
+
+   PROJECT NAME: Bharat Pi Wi-Fi_Connect_with_Time_Sync
+   AUTHOR: Bharat Pi
+   CREATED DATE: 22/01/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION: Bharat Pi Wi-Fi_Connect_with_Time_Sync
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   22/01/2024 -    0.1.0       -    Initial release of sample script.
+
+ *************************************************************************/
+
+
 #include <WiFi.h>
 #include "time.h"
 
