@@ -1,7 +1,21 @@
-/*
-    Arduino and ADXL345 Accelerometer - 3D Visualization Example 
-     by Dejan, https://howtomechatronics.com
-*/
+/*************************************************************************
+
+   PROJECT NAME: Bharat Pi Processing_3D_Object
+   AUTHOR: Bharat Pi
+   CREATED DATE: 22/01/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION:  Arduino and ADXL345 Accelerometer - 3D Visualization Example 
+   by Dejan, https://howtomechatronics.com
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   22/01/2024 -    0.1.0       -    Initial release of sample script.
+
+ *************************************************************************/
 
 import processing.serial.*;
 import java.awt.event.KeyEvent;
