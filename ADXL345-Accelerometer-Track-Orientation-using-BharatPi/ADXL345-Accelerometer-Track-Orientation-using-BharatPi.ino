@@ -1,7 +1,22 @@
-/*
-    Arduino and ADXL345 Accelerometer - 3D Visualization Example 
-     by Dejan, https://howtomechatronics.com
-*/
+/*************************************************************************
+
+   PROJECT NAME: Bharat Pi ADXL345-Accelerometer-Track-Orientation
+   AUTHOR: Bharat Pi
+   CREATED DATE: 22/01/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION:  Arduino and ADXL345 Accelerometer - 3D Visualization Example 
+   by Dejan, https://howtomechatronics.com
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   22/01/2024 -    0.1.0       -    Initial release of sample script to read the data
+
+ *************************************************************************/
+
 #include <Wire.h>  // Wire library - used for I2C communication
 
 int ADXL345 = 0x53; // The ADXL345 sensor I2C address
