@@ -1,13 +1,29 @@
-/**********************************************************************************
-RFID Module pin connection
-SDA (SS)	-> GPIO21
-SCK	->  GPIO 18 
-MOSI	-> GPIO 23
-MISO ->	GPIO 19
-RST	-> GPIO27
-3.3V	-> 3.3V pin
-GND ->	GND pin 
-***************************************************************************************/
+/*************************************************************************
+
+   PROJECT NAME: Bharat Pi RFID_and_Thingspeak
+   AUTHOR: Bharat Pi
+   CREATED DATE: 20/05/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION: Bharat Pi RFID_and_Thingspeak
+    RFID Module pin connection
+    SDA (SS)	-> GPIO21
+    SCK	->  GPIO 18 
+    MOSI	-> GPIO 23
+    MISO ->	GPIO 19
+    RST	-> GPIO27
+    3.3V	-> 3.3V pin
+    GND ->	GND pin 
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   20/05/2024 -    0.1.0       -    Initial release of sample script.
+
+ *************************************************************************/
+
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <MFRC522.h>
