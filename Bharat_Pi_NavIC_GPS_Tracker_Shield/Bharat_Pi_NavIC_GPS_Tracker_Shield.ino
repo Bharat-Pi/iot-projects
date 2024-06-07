@@ -1,9 +1,9 @@
 /*************************************************************************
    PROJECT NAME:  Bharat Pi NavIC Shield test firmware 
    AUTHOR: Bharat Pi
-   CREATED DATE: 25/03/2024
+   CREATED DATE: 26/03/2024
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
-   VERSION: 0.1.1
+   VERSION: 0.1.0
 
    DESCRIPTION: NavIC get latlong and other navigation parameters using Bharat Pi NavIC tracker shield.
 
@@ -11,12 +11,7 @@
    ------------------------------------------
    Date      | Firmware Version | Comments
    ------------------------------------------
-   25/03/2024 -    0.1.0       -    Initial release with Lat long and other nav parameters. Prints to serial monitor.
-                                    (Used Arduino IDE version - 2.3.2,
-                                    Used board manager - esp32 by Espressif version - 2.0.16)
-                                    
-   o6/06/2024 -    0.1.1       -    Added the Updated version of board manager and lib 
-                                    (esp32 by Espressif version - 3.0.0)
+   26/03/2024 -    0.1.0       -    Initial release with Lat long and other nav parameters. Prints to serial monitor.
 
  *************************************************************************/
 
