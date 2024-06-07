@@ -2,9 +2,9 @@
 
    PROJECT NAME: Bharat Pi Tempereture and Humidity sensor Sample Code
    AUTHOR: Bharat Pi
-   CREATED DATE: 22/01/2024
+   CREATED DATE: 27/11/2023
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
-   VERSION: 0.1.0
+   VERSION: 0.1.1
 
    DESCRIPTION:  This script will give you the sample testing of tempereture and humidity sensor,
    which will measures the tempereture and humidty
@@ -14,7 +14,12 @@
    ------------------------------------------
    Date      | Firmware Version | Comments
    ------------------------------------------
-   22/01/2024 -    0.1.0       -    Initial release of sample script.
+   27/11/2023 -    0.1.0       -    Initial release of sample script.
+                                    (Used Arduino IDE version - 2.3.2,
+                                    Used board manager - esp32 by Espressif version - 2.0.16)
+                                    
+   o6/06/2024 -    0.1.1       -    Added the Updated version of board manager and lib 
+                                    (esp32 by Espressif version - 3.0.0)
 
  *************************************************************************/
 
