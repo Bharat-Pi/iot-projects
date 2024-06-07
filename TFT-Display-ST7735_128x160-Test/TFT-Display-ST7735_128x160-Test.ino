@@ -1,7 +1,7 @@
 /*************************************************************************
    PROJECT: Bharat Pi - TFT ST7735 Display test sample code
    AUTHOR: Bharat Pi
-   CREATED DATE: 26/10/2023
+   CREATED DATE: 28/11/2023
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
    VERSION: 0.1.0
    FUNCTION: This is a test of the rotation capabilities of the TFT library
@@ -35,7 +35,7 @@
    ------------------------------------------
    Date      | Firmware Version | Comments
    ------------------------------------------
-   26/10/2023 -    0.1.0       -    Initial release of sample script.
+   28/11/2023 -    0.1.0       -    Initial release of sample script.
 
  *************************************************************************/
 
