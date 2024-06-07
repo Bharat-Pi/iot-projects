@@ -1,10 +1,9 @@
 /*************************************************************************
-
    PROJECT NAME: Bharat Pi TDS monitoring code
    AUTHOR: Bharat Pi
    CREATED DATE: 29/08/2023
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
-   VERSION: 0.1.1
+   VERSION: 0.1.2
 
    DESCRIPTION: Accurately Measure the TDS values and give it in PPM
 
@@ -13,31 +12,28 @@
    Date      | Firmware Version | Comments
    ------------------------------------------
    29/08/2023   -    0.1.0     -    Initial release of sample script.
+                                    (Used Arduino IDE version - 2.3.2,
+                                    Used board manager - esp32 by Espressif version - 2.0.16)
+                                    
    29/08/2023   -    0.1.1     -    Changed the code to have a Curve fitting, Measure multiple TDS values with the Meter and note down voltage.
-                                  Use curve fitting sites like https://atozmath.com/ to identify the values for 4 coefficients
-                                  TDS works like having a Cubic relationship with the voltage value : d*x^3 + c*x^2 + b*x + a
-
-
-  x : 0.25 : y : 0
-  X : 0.36 : y : 116
-  X : 0.56 : y : 326
-  x : 0.81 : y : 616
-  x : 1.01 : y : 1371
-
-  a = -596.5795
-  b = 3609.5997
-  c = -6113.7654
-  d = 4409.4202
-  y = -596.5795 + 3609.5997x - 6113.7654x2 + 4409.4202x3
-
-  here x is the voltage and y is the TDS value calculated for Bharat Pi
-
+                                    Use curve fitting sites like https://atozmath.com/ to identify the values for 4 coefficients
+                                    TDS works like having a Cubic relationship with the voltage value : d*x^3 + c*x^2 + b*x + a
+                                    x : 0.25 : y : 0
+                                    X : 0.36 : y : 116
+                                    X : 0.56 : y : 326
+                                    x : 0.81 : y : 616
+                                    x : 1.01 : y : 1371
+                                    a = -596.5795
+                                    b = 3609.5997
+                                    c = -6113.7654
+                                    d = 4409.4202
+                                    y = -596.5795 + 3609.5997x - 6113.7654x2 + 4409.4202x3
+                                    here x is the voltage and y is the TDS value calculated for Bharat Pi
+                                    
+   o6/06/2024 -    0.1.2       -    Added the Updated version of board manager and lib 
+                                    (esp32 by Espressif version - 3.0.0)
 
  *************************************************************************/
-
-
-
-
 
 #define TdsSensorPin 12
 #define VREF 3.3           // analog reference voltage(Volt) of the ADC
