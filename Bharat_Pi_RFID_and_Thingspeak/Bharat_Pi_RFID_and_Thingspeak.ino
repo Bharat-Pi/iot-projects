@@ -1,10 +1,9 @@
 /*************************************************************************
-
    PROJECT NAME: Bharat Pi RFID_and_Thingspeak
    AUTHOR: Bharat Pi
    CREATED DATE: 20/05/2024
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
-   VERSION: 0.1.0
+   VERSION: 0.1.1
 
    DESCRIPTION: Bharat Pi RFID_and_Thingspeak
     RFID Module pin connection
@@ -21,7 +20,11 @@
    Date      | Firmware Version | Comments
    ------------------------------------------
    20/05/2024 -    0.1.0       -    Initial release of sample script.
-
+                                    (Used Arduino IDE version - 2.3.2,
+                                    Used board manager - esp32 by Espressif version - 2.0.16)
+                                    
+   o6/06/2024 -    0.1.1       -    Added the Updated version of board manager and lib 
+                                    (esp32 by Espressif version - 3.0.0)
  *************************************************************************/
 
 #include <WiFi.h>
