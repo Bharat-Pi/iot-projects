@@ -1,8 +1,7 @@
 /*************************************************************************
-
    PROJECT NAME: Bharat Pi big_sound sensor
    AUTHOR: Bharat Pi
-   CREATED DATE: 22/01/2024
+   CREATED DATE: 02/08/2023
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
    VERSION: 0.1.0
 
@@ -12,7 +11,7 @@
    ------------------------------------------
    Date      | Firmware Version | Comments
    ------------------------------------------
-   22/01/2024 -    0.1.0       -    Initial release of sample script.
+   02/08/2023 -    0.1.0       -    Initial release of sample script.
 
  *************************************************************************/
 
