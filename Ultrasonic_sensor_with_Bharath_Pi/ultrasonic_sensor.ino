@@ -1,7 +1,7 @@
 /*************************************************************************
    PROJECT NAME:  Bharat Pi Ultrasonic sensor Sample Code
    AUTHOR: Bharat Pi
-   CREATED DATE: 22/01/2024
+   CREATED DATE: 27/11/2023
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
    VERSION: 0.1.1
 
@@ -13,7 +13,7 @@
    ------------------------------------------
    Date      | Firmware Version | Comments
    ------------------------------------------
-   22/01/2024 -    0.1.0       -    Initial release of ultrasonic sensor sample script to read the data
+   27/11/2023 -    0.1.0       -    Initial release of ultrasonic sensor sample script to read the data(Used Arduino IDE version - 2.3.2).
 
  *************************************************************************/     
 
