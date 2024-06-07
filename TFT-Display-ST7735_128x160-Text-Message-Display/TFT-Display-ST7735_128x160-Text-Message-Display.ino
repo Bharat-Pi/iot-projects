@@ -3,7 +3,7 @@
    AUTHOR: Bharat Pi
    CREATED DATE: 26/10/2023
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
-   VERSION: 0.1.0
+   VERSION: 0.1.1
    FUNCTION: This is a test code for displaying text content, display circles, lines, triange etc.
    IMPORTANT: Please ensure the pic configurations below are matching with the display you have. 
    There are multiple versions of ST7735 TFT diplays.
@@ -36,6 +36,12 @@
    Date      | Firmware Version | Comments
    ------------------------------------------
    26/10/2023 -    0.1.0       -    Initial release of sample script.
+                                    (Used Arduino IDE version - 2.3.2,
+                                    Used board manager - esp32 by Espressif version - 2.0.16)
+                                    
+   o6/06/2024 -    0.1.1       -    Added the Updated version of board manager and lib 
+                                    (esp32 by Espressif version - 3.0.0)
+
 
  *************************************************************************/
 
