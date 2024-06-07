@@ -1,9 +1,9 @@
 /*************************************************************************
    PROJECT NAME: Bharat Pi TDS monitoring code
    AUTHOR: Bharat Pi
-   CREATED DATE: 29/08/2023
+   CREATED DATE: 17/11/2023
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
-   VERSION: 0.1.2
+   VERSION: 0.1.1
 
    DESCRIPTION: Accurately Measure the TDS values and give it in PPM
 
@@ -11,9 +11,7 @@
    ------------------------------------------
    Date      | Firmware Version | Comments
    ------------------------------------------
-   29/08/2023   -    0.1.0     -    Initial release of sample script.
-                                    (Used Arduino IDE version - 2.3.2,
-                                    Used board manager - esp32 by Espressif version - 2.0.16)
+   17/11/2023   -    0.1.0     -    Initial release of sample script.
                                     
    29/08/2023   -    0.1.1     -    Changed the code to have a Curve fitting, Measure multiple TDS values with the Meter and note down voltage.
                                     Use curve fitting sites like https://atozmath.com/ to identify the values for 4 coefficients
@@ -30,9 +28,6 @@
                                     y = -596.5795 + 3609.5997x - 6113.7654x2 + 4409.4202x3
                                     here x is the voltage and y is the TDS value calculated for Bharat Pi
                                     
-   o6/06/2024 -    0.1.2       -    Added the Updated version of board manager and lib 
-                                    (esp32 by Espressif version - 3.0.0)
-
  *************************************************************************/
 
 #define TdsSensorPin 12
