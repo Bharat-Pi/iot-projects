@@ -1,7 +1,7 @@
 /*************************************************************************
    PROJECT NAME: Bharat Pi LoRa Duplex communication
    AUTHOR: Bharat Pi
-   CREATED DATE: 21/06/2023
+   CREATED DATE: 06/01/2024
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
    VERSION: 0.1.1
 
@@ -18,12 +18,7 @@
    ------------------------------------------
    Date      | Firmware Version | Comments
    ------------------------------------------
-   21/06/2023 -    0.1.0       -    Initial release of sample script.
-                                    (Used Arduino IDE version - 2.3.2,
-                                    Used board manager - esp32 by Espressif version - 2.0.16)
-                                    
-   o6/06/2024 -    0.1.1       -    Added the Updated version of board manager and lib 
-                                    (esp32 by Espressif version - 3.0.0)
+   06/01/2024 -    0.1.0       -    Initial release of sample script.
 
  *************************************************************************/
 
