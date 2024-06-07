@@ -2,9 +2,9 @@
 
    PROJECT NAME: Bharat pi Post_Sensor_Data_To_Bharat_Pi_Cloud_Over_Wifi
    AUTHOR: Bharat Pi
-   CREATED DATE: 25/10/2023
+   CREATED DATE: 17/11/2023
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
-   VERSION: 0.1.0
+   VERSION: 0.1.1
 
    DESCRIPTION: This firmware syncs the data to Bharat Pi Cloud 
    flow sensors and send to Bharat Pi Cloud backend.
@@ -13,7 +13,7 @@
    ------------------------------------------
    Date      | Firmware Version | Comments
    ------------------------------------------
-   25/10/2023 -    0.1.0       -    Initial release of sample script.
+   17/11/2023 -    0.1.0       -    Initial release of sample script.
    27/10/2023 -    0.1.1       -    Added Simple data sync settings to Cloud 
 
  *************************************************************************/
