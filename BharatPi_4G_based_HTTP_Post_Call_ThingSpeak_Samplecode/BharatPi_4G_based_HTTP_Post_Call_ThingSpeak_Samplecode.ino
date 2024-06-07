@@ -1,10 +1,9 @@
 /*************************************************************************
-
    PROJECT: Bharat Pi 4G Board Sample Code for data push to Thingspeak Cloud
    AUTHOR: Bharat Pi
    CREATED DATE: 22/01/2024
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
-   version: 0.1.0
+   version: 0.1.1
  
    FUNC: 4G testing with HTTP call to Thingspeak cloud server.
    
@@ -30,6 +29,11 @@
    Date      | Firmware Version | Comments
    ------------------------------------------
    22/01/2024 -    0.1.0       -    Initial release of sample script.
+                                    (Used Arduino IDE version - 2.3.2,
+                                    Used board manager - esp32 by Espressif version - 2.0.16)
+                                    
+   o6/06/2024 -    0.1.1       -    Added the Updated version of board manager and lib 
+                                    (esp32 by Espressif version - 3.0.0)
 
  *************************************************************************/
 
