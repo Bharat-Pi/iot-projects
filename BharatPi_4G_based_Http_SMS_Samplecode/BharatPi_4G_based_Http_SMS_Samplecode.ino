@@ -1,9 +1,9 @@
 /*************************************************************************
    PROJECT: Bharat Pi 4G Board Sample Code
    AUTHOR: Bharat Pi
-   CREATED DATE: 22/01/2024
+   CREATED DATE: 04/09/2023
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
-   version: 0.1.1
+   version: 0.1.0
  
    FUNC: 4G testing with HTTP call to a url and send SMS.
    SIMCARD: 4G sim cards from Airtel/Vodaphone/Jio/BSNL can be used. To test HTTP request ensure you have data plan and sms pack. 
@@ -23,12 +23,7 @@
    ------------------------------------------
    Date      | Firmware Version | Comments
    ------------------------------------------
-   22/01/2024 -    0.1.0       -    Initial release of sample script.
-                                    (Used Arduino IDE version - 2.3.2,
-                                    Used board manager - esp32 by Espressif version - 2.0.16)
-                                    
-   o6/06/2024 -    0.1.1       -    Added the Updated version of board manager and lib 
-                                    (esp32 by Espressif version - 3.0.0)
+   04/09/2023 -    0.1.0       -    Initial release of sample script.
 
  *************************************************************************/
 
