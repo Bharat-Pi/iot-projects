@@ -1,19 +1,22 @@
-/*
-  Name: Bharat Pi Firmware for WiFi based water/liquid flow monitoring
-  Description: This firmware syncs the data to Bharat Pi Cloud 
-  flow sensors and send to Bharat Pi Cloud backend.
-  Author: Bharat Pi
-  Version: 1.0.2
-  Created Date: 27/10/2023
-  
-  Revision History Table: 
-  ------------------------------------
-  Date      | Version | Comments
-  ------------------------------------
-  27/10/2023 - 1001 - Added Simple data sync settings to Cloud 
+/*************************************************************************
 
+   PROJECT NAME: Bharat pi Post_Sensor_Data_To_Bharat_Pi_Cloud_Over_Wifi
+   AUTHOR: Bharat Pi
+   CREATED DATE: 17/11/2023
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.1
 
-*/
+   DESCRIPTION: This firmware syncs the data to Bharat Pi Cloud 
+   flow sensors and send to Bharat Pi Cloud backend.
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   17/11/2023 -    0.1.0       -    Initial release of sample script.
+   27/10/2023 -    0.1.1       -    Added Simple data sync settings to Cloud 
+
+ *************************************************************************/
 
 
 #include <HTTPClient.h>

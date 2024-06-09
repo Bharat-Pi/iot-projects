@@ -1,3 +1,19 @@
+/*************************************************************************
+   PROJECT NAME: Bharat Pi ThingSpeak_Samplecode_using_wifi
+   AUTHOR: Bharat Pi
+   CREATED DATE: 06/05/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION: BharatPi_4G_based__ThingSpeak_Samplecode_using_wifi
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   06/05/2024 -    0.1.0       -    Initial release of sample script.
+ *************************************************************************/
+
 #include <WiFi.h>
 #include "DHT.h"
 

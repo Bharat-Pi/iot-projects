@@ -1,16 +1,28 @@
-/*
-  LoRa Duplex communication
+/*************************************************************************
+   PROJECT NAME: Bharat Pi LoRa Duplex communication
+   AUTHOR: Bharat Pi
+   CREATED DATE: 06/01/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.1
+
+   DESCRIPTION: LoRa Duplex communication
 
   Sends a message every half second, and polls continually
   for new incoming messages. Implements a one-byte addressing scheme,
   with 0xFF as the broadcast address.
 
   Uses readString() from Stream class to read payload. The Stream class'
-  timeout may affect other functuons, like the radio's callback. For an
+  timeout may affect other functuons, like the radio's callback.
 
-  created 28 April 2017
-  by Tom Igoe
-*/
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   06/01/2024 -    0.1.0       -    Initial release of sample script.
+
+ *************************************************************************/
+
+
 #include <SPI.h>              // include libraries
 #include <LoRa.h>
 

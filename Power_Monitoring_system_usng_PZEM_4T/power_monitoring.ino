@@ -1,3 +1,22 @@
+/*************************************************************************
+
+   PROJECT NAME: Bharat Pi power_monitoring 
+   AUTHOR: Bharat Pi
+   CREATED DATE: 02/08/2023
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION: Bharat Pi power_monitoring using PZEM_AT
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   02/08/2023 -    0.1.0       -    Initial release of sample script.
+
+ *************************************************************************/
+
+
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <Preferences.h>

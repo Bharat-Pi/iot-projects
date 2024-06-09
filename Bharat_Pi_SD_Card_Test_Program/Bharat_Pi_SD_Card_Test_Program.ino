@@ -1,17 +1,31 @@
-/*
- * Connect the SD card to the following pins:
- *
- * SD Card | ESP32
- *    D2       -
- *    D3       SS
- *    CMD      MOSI
- *    VSS      GND
- *    VDD      3.3V
- *    CLK      SCK
- *    VSS      GND
- *    D0       MISO
- *    D1       -
- */
+/*************************************************************************
+   PROJECT NAME: Bharat Pi SD_Card_Test_Program
+   AUTHOR: Bharat Pi
+   CREATED DATE: 26/03/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION: Bharat Pi SD_Card_Test_Program
+   Connect the SD card to the following pins:
+    SD Card | ESP32
+     D2       -
+     D3       SS
+     CMD      MOSI
+     VSS      GND
+     VDD      3.3V
+     CLK      SCK
+     VSS      GND
+     D0       MISO
+     D1       -
+     
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   26/03/2024 -    0.1.0       -    Initial release of sample script.
+   
+ *************************************************************************/
+
 #include "FS.h"
 #include "SD.h"
 #include "SPI.h"

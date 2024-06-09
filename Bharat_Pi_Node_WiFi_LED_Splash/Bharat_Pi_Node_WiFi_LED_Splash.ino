@@ -1,3 +1,20 @@
+/*************************************************************************
+   PROJECT NAME: Bharat Pi Node_WiFi_LED_Splash
+   AUTHOR: Bharat Pi
+   CREATED DATE: 26/03/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.0
+
+   DESCRIPTION: Bharat Pi Node_WiFi_LED_Splash.
+   
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   26/03/2024 -    0.1.0       -    Initial release of sample script.
+   
+ *************************************************************************/
+
 void ledBlink(int time){
   digitalWrite(2, HIGH);
   delay(time);

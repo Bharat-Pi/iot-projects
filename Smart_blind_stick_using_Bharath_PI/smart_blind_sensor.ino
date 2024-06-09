@@ -1,3 +1,22 @@
+/*************************************************************************
+
+   PROJECT NAME: Bharat Pi smart_blind_stick
+   AUTHOR: Bharat Pi
+   CREATED DATE: 02/08/2023 
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.1
+
+   DESCRIPTION: Bharat Pi smart_blind_stick
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   02/08/2023 -    0.1.0       -    Initial release of sample script.
+
+ *************************************************************************/
+
+
 #define TRIG_PIN 33
 #define ECHO_PIN 32
 #define BUZZER_PIN 23

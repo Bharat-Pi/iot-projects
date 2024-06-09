@@ -1,26 +1,24 @@
-/*
-  Blink
+/*************************************************************************
+   PROJECT NAME: Bharat Pi Blink_LED_Test
+   AUTHOR: Bharat Pi
+   CREATED DATE: 06/01/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.1
 
-  Turns an LED on for one second, then off for one second, repeatedly.
+   DESCRIPTION: Turns an LED on for one second, then off for one second, repeatedly.
 
-  Most Arduinos have an on-board LED you can control. On the UNO, MEGA and ZERO
-  it is attached to digital pin 13, on MKR1000 on pin 6. LED_BUILTIN is set to
-  the correct LED pin independent of which board is used.
-  If you want to know what pin the on-board LED is connected to on your Arduino
-  model, check the Technical Specs of your board at:
-  https://www.arduino.cc/en/Main/Products
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   06/01/2024 -    0.1.0       -    Initial release of sample script.
+                                    (Used Arduino IDE version - 2.3.2,
+                                    Used board manager - esp32 by Espressif version - 2.0.16)
+                                    
+   o6/06/2024 -    0.1.1       -    Added the Updated version of board manager and lib 
+                                    (esp32 by Espressif version - 3.0.0)
+ *************************************************************************/
 
-  modified 8 May 2014
-  by Scott Fitzgerald
-  modified 2 Sep 2016
-  by Arturo Guadalupi
-  modified 8 Sep 2016
-  by Colby Newman
-
-  This example code is in the public domain.
-
-  https://www.arduino.cc/en/Tutorial/BuiltInExamples/Blink
-*/
 #define LED_BUILTIN 2
 // the setup function runs once when you press reset or power the board
 void setup() {
