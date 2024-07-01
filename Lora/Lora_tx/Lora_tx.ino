@@ -22,7 +22,7 @@
 #define ss 4
 #define rst 14
 #define dio0 2
-
+ 
 int counter = 0;
 
 void setup() {
