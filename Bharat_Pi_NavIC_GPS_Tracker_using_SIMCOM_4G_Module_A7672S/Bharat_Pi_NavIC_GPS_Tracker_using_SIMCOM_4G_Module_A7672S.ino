@@ -3,7 +3,7 @@
   DESCRIPTION: NavIC get latlong and other navigation parameters using Bharat Pi NavIC 
                tracker shield and push to cloud using SIMCOM A7672 4G Module.
   AUTHOR: Bharat Pi
-  VERSION: 2.0
+  VERSION: 2.0.1
   CEATED: 25/03/2024
   
   RIVISION: 
@@ -13,63 +13,39 @@
   25/03/2024      1.0        Initial release with Lat long and 
                              other nav parameters capture and push to cloud.
 
-  05/08/2024 -    2.0        Switched to Hardware serial as the software serial had issues with baud rates,
-                             Added Google maps link so that lat long can be viewed from URL printed on serial monitor                            
+  05/08/2024      2.0        Switched to Hardware serial as the software serial had issues with baud rates,
+                             Added Google maps link so that lat long can be viewed from URL printed on serial monitor
+  
+  06/08/2024      2.0.1      Fixed SMS issue, added send lat long also as SMS every 30 seconds. Make sure 
 
 *******************************************************************************/
+
 
 #define TINY_GSM_MODEM_SIM7600 //TINY_GSM_MODEM compatible for 7672 as well
 #define TINY_GSM_RX_BUFFER 1024
 
 #define TINY_GSM_TEST_SMS true
-#define SMS_TARGET  "9880721666" //Enter you phone number to which you would like to recevied SMS
+#define SMS_TARGET1  "9606543710" //Enter you phone number to which you would like to recevied SMS
+//You can add multiple phone number to get SMS
+//#define SMS_TARGET2  "xxxxxxxxxx" //Enter you phone number to which you would like to recevied SMS
+//#define SMS_TARGET3  "xxxxxxxxxx" //Enter you phone number to which you would like to recevied SMS
 
 #define SerialAT Serial1
 #define SerialMon Serial
 
 #define GSM_PIN "" //In case if you have a password protection for your simcard
 
-#include <Arduino.h> //Arduino base lib
-#include <TinyGsmClient.h> // GSM library for 4G module
-#include <SPI.h> //SPI interface
-#include <ArduinoJson.h> //Convert to json object
 #include <WiFi.h> // Wifi client
-#include <Preferences.h> //Local cache
-
 #include <TinyGPS++.h>
 #include <HardwareSerial.h>
-
-
 #define GPS_RX_PIN 33
 #define GPS_TX_PIN 32 
-
 
 TinyGPSPlus gps;
 HardwareSerial gpsSerial(2);
 
-const char apn[]  = "airtelgprs.com"; 
-const char gprsUser[] = "";
-const char gprsPass[] = "";
-
-String send_data_to_url = "https://eogas6eaag50nu2.m.pipedream.net"; // Test URL for demo purposes, Pipedream is a free api test service, you can check if the data is been sent to cloud.
-String gpsLatLong = ""; //Get gps lat long 
-String dataToSync = "";
-String simOperator = "";
-
-String cloudUrl = "<<YOUR_CLOUD_URL>>"; //API or a Callback url to send your data to your production cloud.
-int firmWareVersion = 1000;  //Firmware version
-
-//Local cache 
-Preferences preferences;
-String lastLatLong = "";
-String lastSyncTime = "";
-
-long currentMillis = 0;
-long previousMillis = 0;
-boolean ledState = LOW;
-
-// Node specific variables
-String orgID = "3c701cf4-7b2b-42a4-9814-b393bb1628e6"; //Suzuki
+// Dummy variables to create a json object to push to cloud
+String orgID = ""; //Suzuki
 String devID = "";
 String sensorName = "lat_long_1";
 String secID = "";
@@ -77,13 +53,30 @@ String secID = "";
 String sensorData = "00"; 
 String payload = "";
 
-//GPS parsing variables
-char *gpsValues[20];
+//Set APN as per your sim card:
+//Airtel -> "airtelgprs.com" 
+//BSNL -> "bsnlnet" 
+//Voda -> portalnmms
+//jio -> jionet
+const char apn[]  = "airtelgprs.com"; 
+const char gprsUser[] = "";
+const char gprsPass[] = "";
+
+//API/Callback url to send your data to cloud. In this example we have used 
+//Pipedream which will allow to create a dummy call back URL and send data for testing purpose. 
+//Create your account in Pipedream and deploy a call back URL and assign that url to this variable.
+String send_data_to_url = "https://eogas6eaag50nu2.m.pipedream.net";
+String gpsLatLong = ""; //Get gps lat long 
+String simOperator = "";
 
 int timeout = 60; //GPS latch timeout duration. You can increase this value based on your application/need.
-int interval = 10000; //Fetch GPS data upon every 60 seconds (1 min)
 
-StaticJsonDocument<500> payloadObj; //for testing http request
+#include <TinyGsmClient.h> //Library version compatible 0.12.0
+#include <SPI.h> //ESP32 SPI Lib version - 2.0.16
+#include <ArduinoJson.h> //Lib version - 7.0.3
+#include <Ticker.h> //Lib version - 4.4.0
+
+StaticJsonDocument<200> payloadObj; //for testing http request
 
 #ifdef DUMP_AT_COMMANDS
   #include <StreamDebugger.h>
@@ -121,20 +114,9 @@ void modemRestart(){
   modemPowerOn();
 }
 
-void sendSMS(String phoneNumber, String msg){
-  Serial.print("Sending SMS to number:");
-  Serial.println(phoneNumber);
-
-  #if TINY_GSM_TEST_SMS && defined TINY_GSM_MODEM_HAS_SMS 
-    bool res = modem.sendSMS(phoneNumber, String(msg));
-    DBG("SMS sent status:", res ? "SUCCESS" : "FAILED");
-    delay(2000);
-  #endif
-}
-
 void postData(String dataTobePushed) {
 
-    digitalWrite(LED_PIN, LOW);
+    digitalWrite(LED_PIN, HIGH);
     Serial.println("LED OFF"); 
     Serial.println("Cloud sync inprogress....");
 
@@ -154,6 +136,7 @@ void postData(String dataTobePushed) {
     //Push to cloud
     httpPost(sensorData);
     Serial.println();
+    digitalWrite(LED_PIN, LOW);
 }
 
 void httpPost(String data){
@@ -214,17 +197,22 @@ void httpPost(String data){
   sensorData = "";
 }
 
-void setup() {
-  Serial.begin(115200);  
-  gpsSerial.begin(115200, SERIAL_8N1, GPS_RX_PIN, GPS_TX_PIN); 
-  Serial.setDebugOutput(true); 
-  delay(5000); //dummy delay for 5 seconds so that serial monitor settles down
-
+void setup(){
+  // Set console baud rate
+  SerialMon.begin(115200);
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, LOW);
 
+  delay(1000);
+
+  WiFi.begin(); //Initialize wifi so that you can get a Mac address of the device
+  devID = WiFi.macAddress(); //Set device ID
+  Serial.print("Device ID set to: "); //Use device ID for tagging data to this specific device.
+  Serial.println(devID);
+
   modemPowerOn();
   SerialAT.begin(UART_BAUD, SERIAL_8N1, PIN_RX, PIN_TX);
+  gpsSerial.begin(UART_BAUD, SERIAL_8N1, GPS_RX_PIN, GPS_TX_PIN); 
   Serial.clearWriteError();
   Serial.println();
   Serial.println();
@@ -238,45 +226,7 @@ void setup() {
   Serial.println("  IMPORTANT: Ensure that the antenna has sky visibility and its not cloudy else it may not latch.");
   Serial.println("/**********************************************************/\n\n");
 
-  delay(2000); //Allow some time for modem to power ON.
-
-  Serial.print("Firmware version: ");
-  Serial.print(firmWareVersion);
-  Serial.println();  
-  Serial.println("Booting...");
-  WiFi.setHostname("BharatPi-NavIC-Tracker"); //Later if you wish to use WiFi as AP or Station mode
-  Serial.print("Hostname set to: ");
-  Serial.println(WiFi.getHostname());
-
-  WiFi.begin(); //Initialize wifi so that you can get a Mac address of the device
-  devID = WiFi.macAddress(); //Set device ID
-  Serial.print("Device ID set to: "); //Use device ID for tagging data to this specific device.
-  Serial.println(devID);
-
-  //Set preferences for local storage, this is a persistance memory and remains even after device reset/reboot.
-  preferences.begin("BP_CACHE", false);
-  
-  //If cached previous values then retrive them
-  if(preferences.isKey("LAST_LAT_LONG")){
-    lastLatLong = preferences.getString("LAST_LAT_LONG", "NA");
-  }
-  
-  if(preferences.isKey("LAST_SYNC_TIME")){
-    lastSyncTime = preferences.getString("LAST_SYNC_TIME", "NA");
-  }
-
-  Serial.println();
-  Serial.println("***** Last Cached Data *****");
-  Serial.print("Lat long - ");
-  Serial.println(lastLatLong);
-  Serial.print("Sync Time - ");
-  Serial.println(lastSyncTime);
-  Serial.println();
-  Serial.println();
-  
-  //TODO: Need to implement device power ON stat capture. Need a seperate API for this.
-
-  delay(1000);
+  delay(2000);
 
   String res;
   Serial.println("Initializing Modem...");
@@ -300,7 +250,7 @@ void setup() {
   Serial.println("Running SIMCOMATI command...");
   modem.sendAT("+SIMCOMATI"); //Get the module information
   modem.waitResponse(1000L, res);
-  //res.replace(GSM_NL "OK" GSM_NL, "");
+  res.replace(AT_NL "OK" AT_NL, "");
   Serial.println(res);
   res = "";
   Serial.println();
@@ -308,7 +258,7 @@ void setup() {
   Serial.println("Preferred mode selection (GSM/LTE)...");
   modem.sendAT("+CNMP?");
   if (modem.waitResponse(1000L, res) == 1) {
-    //res.replace(GSM_NL "OK" GSM_NL, "");
+    res.replace(AT_NL "OK" AT_NL, "");
     Serial.println(res);
   }
   res = "";
@@ -319,14 +269,14 @@ void setup() {
   Serial.println("Preferred selection between CAT-M and NB-IoT...");
   modem.sendAT("+CMNB?");
   if (modem.waitResponse(1000L, res) == 1) {
-    //res.replace(GSM_NL "OK" GSM_NL, "");
+    res.replace(AT_NL "OK" AT_NL, "");
     Serial.println(res);
   }
   res = "";
   Serial.println();
 
   //Get module manufacturer details
-  String modemName = modem.getModemName();
+  String modemName = modem.getModemModel();
   Serial.println("Modem Name : " + modemName);
   delay(1000);
 
@@ -341,7 +291,8 @@ void setup() {
   //payload="Bharat Pi 4G Module Testing";
 
   // Unlock your SIM card with a PIN if needed (not applicable for regular sim testing)
-  if ( GSM_PIN && modem.getSimStatus() != 3 ) {
+  if ( 
+    GSM_PIN && modem.getSimStatus() != 3 ) {
     modem.simUnlock(GSM_PIN);
   }
 
@@ -361,7 +312,7 @@ void setup() {
     int tryCount = 60;
     while (tryCount--) {
       String netoworkOerator = modem.getOperator();
-      Serial.print("Operator: ");
+      //Serial.pri/Users/prabhu/Downloads/FJHW1B1IGDIUPRN.inont("Operator: ");
       Serial.println(netoworkOerator);
       int16_t signal =  modem.getSignalQuality();
       Serial.print("Signal: ");
@@ -390,26 +341,26 @@ void setup() {
   Serial.println();
   modem.sendAT("+CPSI?");
   if (modem.waitResponse(1000L, res) == 1) {
-    //res.replace(GSM_NL "OK" GSM_NL, "");
+    res.replace(AT_NL "OK" AT_NL, "");
     Serial.println(res);
   }
-
-  //Get SIM operator name
-  modem.sendAT("+CSPN?");
-  if (modem.waitResponse(1000L, simOperator) == 1) {
-    //res.replace(GSM_NL "OK" GSM_NL, "");
-    Serial.print("Sim Operator: ");
-    Serial.println(simOperator);
-  }
-  Serial.println();
 
   delay(1000);  
   Serial.println("");
   Serial.println("");  
 
+  //Get SIM operator name
+  modem.sendAT("+CSPN?");
+  if (modem.waitResponse(1000L, simOperator) == 1) {
+    res.replace(AT_NL "OK" AT_NL, "");
+    Serial.print("Sim Operator: ");
+    Serial.println(simOperator);
+  }
+  Serial.println();  
+
   delay(2000);
-  Serial.println("Testing a sample HTTPS Call to pipe drive server...");
-  Serial.println("NOTE: You can use your own choice of cloud or you can deploy an end point \n on Pipe Dream (https://pipedream.com) which is a free server to test API calls. Example: " + send_data_to_url);
+  Serial.println("Testing the a sample HTTPS Call to pipe drive server...");
+  Serial.println("NOTE: Please ensure to deploy an end point on Pipe Dream (pipedream.com) to test. Example: " + send_data_to_url);
   Serial.println();
   Serial.println();
   Serial.println("MODEM TESTING IN PROGRESS....");
@@ -470,22 +421,34 @@ void setup() {
     delay(2000);
   }
 
-  modemInfo += ", ID: ";
-  modemInfo += devID;
-  modemInfo += ", SIM: ";
-  modemInfo += simOperator;
+  Serial.println("Sending Test SMS to number(s):");
+  Serial.println(SMS_TARGET1);
+  
+  //Uncomment below to print if you have set more than one phone numbers
+  //Serial.println(SMS_TARGET2);
+  //Serial.println(SMS_TARGET3);
 
-  sendSMS(SMS_TARGET, modemInfo); //Send test SMS
-  Serial.println("End of 4G Modem Power ON and testing.");   
+  #if TINY_GSM_TEST_SMS && defined TINY_GSM_MODEM_HAS_SMS && defined SMS_TARGET1 
+    res = modem.sendSMS(SMS_TARGET1, String(modemInfo));
+    DBG("SMS sent status:", res ? "SUCCESS" : "FAILED");
+    delay(2000);
+
+    //Uncomment below code if you wish to send SMS to more than one number. 
+    // res = modem.sendSMS(SMS_TARGET2, String("Hello from Bharat Pi! Board is working."));
+    // DBG("SMS sent status:", res ? "SUCCESS" : "FAILED");
+    // delay(2000);
+
+    // res = modem.sendSMS(SMS_TARGET3, String("Hello from Bharat Pi! Board is working."));
+    // DBG("SMS sent status:", res ? "SUCCESS" : "FAILED");
+    // delay(2000);
+  #endif
+  Serial.println(">>>>> End of 4G Modem Testing <<<<<<");
   Serial.println();
-  Serial.println("Awaiting for NavIC satellite signal latching...");
   Serial.println();
-  //getGPSInfo(); 
-  //pushGPSDataToCloud();
 }
 
-void loop() {
-  // Read data from NavIC module and push to a configured cloud URL
+
+void loop(){
   while (gpsSerial.available() > 0) {
     if (gps.encode(gpsSerial.read())) {
       if (gps.location.isValid()) {
@@ -526,8 +489,16 @@ void loop() {
         Serial.print("Pushing NavIC lat long data to cloud....");     
         delay(2000);
         postData(String(latitude, 7) + "," + String(longitude, 7)); //You can create a json object with all the NavIC data and push to cloud
-        delay(20000); //Push lat long to cloud every 10 seconds
+        delay(2000);
+        //Send Lat long as SMS 
+        #if TINY_GSM_TEST_SMS && defined TINY_GSM_MODEM_HAS_SMS && defined SMS_TARGET1 
+          bool resp = modem.sendSMS(SMS_TARGET1, "Bharat Pi NavIC GPS Tracker.\n\nLat:" + String(latitude, 7) + "\nLong:" + String(longitude, 7));
+          DBG("SMS sent status:", resp ? "SUCCESS" : "FAILED");
+          delay(2000);
+        #endif
+
+        delay(30000); //Push lat long to cloud every 10 seconds
       }
     }
-  }   
+  }  
 }
