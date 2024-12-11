@@ -65,7 +65,7 @@ const char apn[]  = "airtelgprs.com"; //Change this as per your Sim card operato
   SECTION: Set Thingspeak cloud and respective API key
 *********************************************/
 String cloud_url = "https://api.thingspeak.com/update.json"; //Thingspeak update URL for sending data as JSON object
-String apiKey = "VJP11NDRLY1BGODD";  // change this to the thingspeak API key as per your account
+String apiKey = "20MNHFQKV1NFW83I";  // change this to the thingspeak API key as per your account
 
 
 StaticJsonDocument<200> payloadObj; //for testing http request
@@ -147,7 +147,7 @@ void setup(){
   Serial.println("Running SIMCOMATI command...");
   modem.sendAT("+SIMCOMATI"); //Get the module information
   modem.waitResponse(1000L, res);
-  res.replace(GSM_NL "OK" GSM_NL, "");
+  res.replace(AT_NL "OK" AT_NL, "");
   Serial.println(res);
   res = "";
   Serial.println();
@@ -155,7 +155,7 @@ void setup(){
   Serial.println("Preferred mode selection (GSM/LTE)...");
   modem.sendAT("+CNMP?");
   if (modem.waitResponse(1000L, res) == 1) {
-    res.replace(GSM_NL "OK" GSM_NL, "");
+    res.replace(AT_NL "OK" AT_NL, "");
     Serial.println(res);
   }
   res = "";
@@ -166,7 +166,7 @@ void setup(){
   Serial.println("Preferred selection between CAT-M and NB-IoT...");
   modem.sendAT("+CMNB?");
   if (modem.waitResponse(1000L, res) == 1) {
-    res.replace(GSM_NL "OK" GSM_NL, "");
+    res.replace(AT_NL "OK" AT_NL, "");
     Serial.println(res);
   }
   res = "";
@@ -229,7 +229,7 @@ void setup(){
   Serial.println();
   modem.sendAT("+CPSI?");
   if (modem.waitResponse(1000L, res) == 1) {
-    res.replace(GSM_NL "OK" GSM_NL, "");
+    res.replace(AT_NL "OK" AT_NL, "");
     Serial.println(res);
   }
 
