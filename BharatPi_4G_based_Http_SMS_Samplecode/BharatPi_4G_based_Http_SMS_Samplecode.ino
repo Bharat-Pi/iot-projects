@@ -24,7 +24,8 @@
    Date      | Firmware Version | Comments
    ------------------------------------------
    04/09/2023 -    0.1.0       -    Initial release of sample script.
-
+   22/06/2024 -    0.1.1       -    TinyGSM lib updated to latest version,
+                                    code changes to reflect new method names.
  *************************************************************************/
 
 
@@ -59,10 +60,10 @@ String gpsLatLong = ""; //Get gps lat long
 
 int timeout = 60; //GPS latch timeout duration. You can increase this value based on your application/need.
 
-#include <TinyGsmClient.h>
-#include <SPI.h>
-#include <ArduinoJson.h>
-#include <Ticker.h>
+#include <TinyGsmClient.h> //Library version compatible 0.12.0
+#include <SPI.h> //ESP32 SPI Lib version - 2.0.16
+#include <ArduinoJson.h> //Lib version - 7.0.3
+#include <Ticker.h> //Lib version - 4.4.0
 
 StaticJsonDocument<200> payloadObj; //for testing http request
 
@@ -145,7 +146,7 @@ void setup(){
   Serial.println("Running SIMCOMATI command...");
   modem.sendAT("+SIMCOMATI"); //Get the module information
   modem.waitResponse(1000L, res);
-  res.replace(GSM_NL "OK" GSM_NL, "");
+  res.replace(AT_NL "OK" AT_NL, "");
   Serial.println(res);
   res = "";
   Serial.println();
@@ -153,7 +154,7 @@ void setup(){
   Serial.println("Preferred mode selection (GSM/LTE)...");
   modem.sendAT("+CNMP?");
   if (modem.waitResponse(1000L, res) == 1) {
-    res.replace(GSM_NL "OK" GSM_NL, "");
+    res.replace(AT_NL "OK" AT_NL, "");
     Serial.println(res);
   }
   res = "";
@@ -164,14 +165,14 @@ void setup(){
   Serial.println("Preferred selection between CAT-M and NB-IoT...");
   modem.sendAT("+CMNB?");
   if (modem.waitResponse(1000L, res) == 1) {
-    res.replace(GSM_NL "OK" GSM_NL, "");
+    res.replace(AT_NL "OK" AT_NL, "");
     Serial.println(res);
   }
   res = "";
   Serial.println();
 
   //Get module manufacturer details
-  String modemName = modem.getModemName();
+  String modemName = modem.getModemModel();
   Serial.println("Modem Name : " + modemName);
   delay(1000);
 
@@ -186,7 +187,8 @@ void setup(){
   //payload="Bharat Pi 4G Module Testing";
 
   // Unlock your SIM card with a PIN if needed (not applicable for regular sim testing)
-  if ( GSM_PIN && modem.getSimStatus() != 3 ) {
+  if ( 
+    GSM_PIN && modem.getSimStatus() != 3 ) {
     modem.simUnlock(GSM_PIN);
   }
 
@@ -235,7 +237,7 @@ void setup(){
   Serial.println();
   modem.sendAT("+CPSI?");
   if (modem.waitResponse(1000L, res) == 1) {
-    res.replace(GSM_NL "OK" GSM_NL, "");
+    res.replace(AT_NL "OK" AT_NL, "");
     Serial.println(res);
   }
 
