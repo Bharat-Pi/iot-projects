@@ -1,4 +1,23 @@
-// Pin definitions
+/*************************************************************************
+   PROJECT NAME: Bharat Pi Sensor_dock_button_code
+   AUTHOR: Bharat Pi
+   CREATED DATE: 11/12/2024
+   COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
+   VERSION: 0.1.1
+
+   DESCRIPTION: Turns an LED on when pressing the button.
+
+   REVISION HISTORY TABLE:
+   ------------------------------------------
+   Date      | Firmware Version | Comments
+   ------------------------------------------
+   06/01/2024 -    0.1.0       -    Initial release of sample script.
+                                    (Used Arduino IDE version - 2.3.2,
+                                    Used board manager - esp32 by Espressif version - 2.0.16)
+                                    
+   o6/06/2024 -    0.1.1       -    Added the Updated version of board manager and lib 
+                                    (esp32 by Espressif version - 3.0.0)
+ *************************************************************************/
 #define BUTTON_PIN 14    // GPIO pin connected to the button
 #define LED1_PIN 18       // GPIO pin for LED 1
 #define LED2_PIN 23       // GPIO pin for LED 2
