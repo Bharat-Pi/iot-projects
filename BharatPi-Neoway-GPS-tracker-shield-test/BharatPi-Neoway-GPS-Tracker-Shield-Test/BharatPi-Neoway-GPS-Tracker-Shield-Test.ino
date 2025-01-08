@@ -1,69 +1,96 @@
 /*************************************************************************
-   PROJECT NAME: Bharat Pi Neoway-GPS-Tracker-Shield-Test
+   PROJECT NAME:  Bharat Pi NavIC Shield test firmware 
    AUTHOR: Bharat Pi
-   CREATED DATE: 06/01/2024
+   CREATED DATE: 26/03/2024
    COPYRIGHT: BharatPi @MIT license for usage on Bharat Pi boards
-   VERSION: 0.1.1
+   VERSION: 2.0
 
-   DESCRIPTION: Neoway-GPS-Tracker-Shield-Test
+   DESCRIPTION: NavIC get latlong and other navigation parameters using Bharat Pi NavIC tracker shield.
 
    REVISION HISTORY TABLE:
    ------------------------------------------
    Date      | Firmware Version | Comments
    ------------------------------------------
-   06/01/2024 -    0.1.0       -    Initial release of sample script.
-                                    (Used Arduino IDE version - 2.3.2,
-                                    Used board manager - esp32 by Espressif version - 2.0.16)
-                                    
-   o6/06/2024 -    0.1.1       -    Added the Updated version of board manager and lib 
-                                    (esp32 by Espressif version - 3.0.0)
+   26/03/2024 -    1.0       -    Initial release with Lat long and other nav parameters. Prints to serial monitor.
+   05/08/2024 -    2.0       -    Switched to Hardware serial as the software serial had issues with baud rates,
+                             -    Added Google maps link so that lat long can be viewed from URL printed on serial monitor
+
  *************************************************************************/
 
-#include <SoftwareSerial.h>
-#include <TinyGPSPlus.h>
+#include <TinyGPS++.h> //Lib version compatible - 1.0.3
+#include <HardwareSerial.h> //This is available from ESP32 itself not an external lib so we are good here.
 
 
-// The TinyGPSPlus object
+#define GPS_RX_PIN 33
+#define GPS_TX_PIN 32 
 
 
 TinyGPSPlus gps;
+HardwareSerial gpsSerial(1);
 
-// The serial connection to the GPS module
-SoftwareSerial ss(32, 33);
 
 void setup() {
-  Serial.begin(9600);
-  ss.begin(9600);
+    Serial.begin(115200);  
+    gpsSerial.begin(115200, SERIAL_8N1, GPS_RX_PIN, GPS_TX_PIN); 
+    delay(5000);
+    Serial.println();
+    Serial.println();
+    Serial.println();
+    Serial.println();
+    Serial.println("**********************************************************************************");
+    Serial.println("  Bharat Pi NavIC Shield Test Program\n  You can use the NavIC shield on any Bharat Pi boards.\n");
+    Serial.println("  Please wait while the NavIC module latches to satellites.\n");
+    Serial.println("  You will notice the \"Red LED\" (PPS) on NavIC shield blinking once it latches.\n\n");
+    Serial.println("  IMPORTANT: Ensure that the antenna has sky visibility and its not cloudy else it may not latch.");
+    Serial.println("**********************************************************************************");
+    Serial.println();
+    Serial.println();
+    Serial.println("  Awaiting for NavIC satellite signal latching...");
+    Serial.println();
+    Serial.println();
 }
+
 
 void loop() {
-  while (ss.available() > 0) {
-    // get the byte data from the GPS
-//        byte gpsData = ss.read();
-//        Serial.write(gpsData);
-    if (gps.encode(ss.read()))
-      displayInfo();
-    if (millis() > 5000 && gps.charsProcessed() < 10)
-    {
-      Serial.println(F("No GPS detected: check wiring."));
-      while (true);
-    }
-  }
-}
+    // Read data from GPS module
+    while (gpsSerial.available() > 0) {
+        if (gps.encode(gpsSerial.read())) {
+            if (gps.location.isValid()) {
+                // Get latitude and longitude
+                float latitude = gps.location.lat();
+                float longitude = gps.location.lng();
+                String  date = gps.date.day() + "/" + gps.date.month();
+                String time = gps.time.hour() + ":" + gps.time.minute();
+                double speedKnots = gps.speed.knots();
+                float  courseDeg = gps.course.deg();
+                double altitudeMts = gps.altitude.meters();
+                uint32_t satellites = gps.satellites.value();
+                double hdop = gps.hdop.hdop();
 
-void displayInfo()
-{
-  Serial.println(F("Location: "));
-  if (gps.location.isValid()) {
-    Serial.print("Lat: ");
-    Serial.print(gps.location.lat(), 6);
-    Serial.print(F(","));
-    Serial.print("Lng: ");
-    Serial.print(gps.location.lng(), 6);
-    Serial.println();
-  }
-  else
-  {
-    Serial.println(F("INVALID"));
-  }
+                // Print latitude and longitude, you can uncommment other parameter if you like to view those as well like date/time etc.
+                Serial.print("Lat: ");
+                Serial.println(latitude, 7);
+                Serial.print("Long: ");
+                Serial.println(longitude, 7);
+                Serial.print("View lat long on Google Maps ===>>> ");
+                Serial.println("http://maps.google.com/maps?q=" + String(latitude, 7) + "," + String(longitude, 7));
+                // Serial.print("Date: ");
+                // Serial.println(date);
+                // Serial.print("Time: ");
+                // Serial.println(time);
+                Serial.print("Speed (knots): ");
+                Serial.println(speedKnots, 7);                                                
+                Serial.print("Course (degree): ");
+                Serial.println(courseDeg, 7);
+                Serial.print("Altitude (Meters): ");
+                Serial.println(altitudeMts, 7);    
+                Serial.print("Satellites:");
+                Serial.println(satellites, 7);  
+                Serial.print("HDOP:");
+                Serial.println(hdop, 7);    
+                Serial.println();
+                Serial.println();                                                            
+            }
+        }
+    }
 }
