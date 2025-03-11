@@ -25,7 +25,7 @@
 #define TINY_GSM_RX_BUFFER 1024
 
 #define TINY_GSM_TEST_SMS true
-#define SMS_TARGET1  "9606543710" //Enter you phone number to which you would like to recevied SMS
+#define SMS_TARGET1  "9880721666" //Enter you phone number to which you would like to recevied SMS
 //You can add multiple phone number to get SMS
 //#define SMS_TARGET2  "xxxxxxxxxx" //Enter you phone number to which you would like to recevied SMS
 //#define SMS_TARGET3  "xxxxxxxxxx" //Enter you phone number to which you would like to recevied SMS
@@ -161,7 +161,7 @@ void httpPost(String data){
     Serial.println("ERROR: HTTP CONTENT TYPE SETTING FAILED");
     DBG("+HTTPPARA=\"CONTENT\",\"text/plain\"");
   }
-  modem.sendAT("+HTTPDATA=" + String(data.length()) + ",20000"); //length of the body (data) and max time required in milliseconds to input the data
+  modem.sendAT("+HTTPDATA=" + String(data.length())); //length of the body (data) and max time required in milliseconds to input the data
   //HTTPDATA responds with DOWNLOAD so need to wait for this and then send the body/data of the post call
   while (modem.waitResponse(1000UL, "DOWNLOAD") != 1) {
       Serial.print(".");
@@ -210,9 +210,11 @@ void setup(){
   Serial.print("Device ID set to: "); //Use device ID for tagging data to this specific device.
   Serial.println(devID);
 
+  pinMode(GPS_TX_PIN, OUTPUT);
+  pinMode(GPS_RX_PIN, OUTPUT);
   modemPowerOn();
   SerialAT.begin(UART_BAUD, SERIAL_8N1, PIN_RX, PIN_TX);
-  gpsSerial.begin(UART_BAUD, SERIAL_8N1, GPS_RX_PIN, GPS_TX_PIN); 
+  // gpsSerial.begin(UART_BAUD, SERIAL_8N1, GPS_RX_PIN, GPS_TX_PIN); 
   Serial.clearWriteError();
   Serial.println();
   Serial.println();
@@ -239,6 +241,8 @@ void setup(){
     digitalWrite(LED_PIN, LOW);
     //return;
   }
+
+  gpsSerial.begin(UART_BAUD, SERIAL_8N1, GPS_RX_PIN, GPS_TX_PIN); 
 
   //Blue LED on the board use as an indicator
   //If blinking: Modem not able to boot
@@ -347,7 +351,26 @@ void setup(){
 
   delay(1000);  
   Serial.println("");
-  Serial.println("");  
+  Serial.println("");
+
+  if(modem.isNetworkConnected()){
+    Serial.println("Mobile Network is connected.......");
+  }  
+  // GPRS connection parameters are usually set after network registration
+  SerialMon.print(F("DATA Connection Details: \nConnecting to APN: "));
+  SerialMon.println(apn);
+  if (!modem.gprsConnect(apn, "", "")) {
+    Serial.println("APN connect failed");
+    delay(10000);
+    return;
+  }
+  Serial.println("APN connect success");
+
+  if (modem.isGprsConnected()) { 
+    Serial.println("");
+    Serial.println("GPRS network is connected");
+  }
+  Serial.println("");    
 
   //Get SIM operator name
   modem.sendAT("+CSPN?");
@@ -388,11 +411,15 @@ void setup(){
     Serial.println("ERROR: HTTP CONTENT TYPE SETTING FAILED");
     DBG("+HTTPPARA=\"CONTENT\",\"text/plain\"");
   }
-  modem.sendAT("+HTTPDATA=" + String(payload.length()) + ",20000"); //length of the body (data) and max time required in milliseconds to input the data
+  modem.sendAT("+HTTPDATA=" + String(payload.length())); //length of the body (data) and max time required in milliseconds to input the data
   //HTTPDATA responds with DOWNLOAD so need to wait for this and then send the body/data of the post call
-  while (modem.waitResponse(1000UL, "DOWNLOAD") != 1) {
-      Serial.print(".");
-  }
+  // while (modem.waitResponse(1000UL, "DOWNLOAD") != 1) {
+  //     Serial.print(".");
+  // }
+  if (modem.waitResponse(10000L) != 1) {
+    Serial.println("ERROR: HTTP DATA SETTING FAILED");
+    DBG("+HTTPDATA=" + String(payload.length()));
+  }  
   delay(2000);
 
   //Send the body/data of the post call
@@ -443,6 +470,9 @@ void setup(){
     // delay(2000);
   #endif
   Serial.println(">>>>> End of 4G Modem Testing <<<<<<");
+  Serial.println();
+  Serial.println();
+  Serial.println("Awaiting NavIC GPS Tracker latching");
   Serial.println();
   Serial.println();
 }
@@ -498,6 +528,9 @@ void loop(){
         #endif
 
         delay(30000); //Push lat long to cloud every 10 seconds
+      } else {
+        Serial.print(".");
+        delay(2000);
       }
     }
   }  

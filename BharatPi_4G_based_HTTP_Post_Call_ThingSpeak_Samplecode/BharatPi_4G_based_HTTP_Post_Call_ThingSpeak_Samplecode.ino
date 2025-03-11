@@ -47,7 +47,7 @@
 
 #define LED_PIN 2
 
-#include <TinyGsmClient.h>
+#include <TinyGsmClient.h>  //Lib version supported: 0.12.0
 #include <SPI.h>
 #include <ArduinoJson.h>
 #include <Ticker.h>

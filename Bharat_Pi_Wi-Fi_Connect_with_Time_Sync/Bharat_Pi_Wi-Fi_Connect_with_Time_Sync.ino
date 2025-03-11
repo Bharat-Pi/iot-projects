@@ -19,8 +19,8 @@
 #include <WiFi.h>
 #include "time.h"
 
-const char* ssid       = "xHacker"; // Wi-Fi to connect, ensure to type exact name and is case sensitive 
-const char* password   = "OTP12345"; //Wi-Fi password
+const char* ssid       = "ACT 1ST FLOOR"; // Wi-Fi to connect, ensure to type exact name and is case sensitive 
+const char* password   = "1@Jjj4656#"; //Wi-Fi password
 
 const char* ntpServer = "pool.ntp.org"; //NTP server to which the board will set the time
 const long  gmtOffset_sec = 3600;
@@ -63,10 +63,7 @@ void setup() {
   printLocalTime();  
 
   delay(1000);
-  WiFiClientSecure client;
-
-
-
+  WiFiClient client;
 }
 
 void loop() {

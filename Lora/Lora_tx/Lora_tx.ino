@@ -28,8 +28,12 @@ int counter = 0;
 void setup() {
   //initialize Serial Monitor
   Serial.begin(115200);
+  delay(1000);
   while (!Serial);
-  Serial.println("LoRa Sender");
+  Serial.println("--------------------------------");
+  Serial.println(" Bharat Pi LoRa Test Program");
+  Serial.println(" Function: Transmitter");
+  Serial.println("--------------------------------");
 
   //setup LoRa transceiver module
   LoRa.setPins(ss, rst, dio0);
@@ -51,12 +55,12 @@ void setup() {
 }
 
 void loop() {
-  Serial.print("Sending packet: ");
+  Serial.print("Sending test packet: ");
   Serial.println(counter);
 
   //Send LoRa packet to receiver
   LoRa.beginPacket();
-  LoRa.print("hello ");
+  LoRa.print("Packet-");
   LoRa.print(counter);
   LoRa.endPacket();
 

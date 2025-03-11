@@ -26,8 +26,8 @@
 void setup() {
   //initialize Serial Monitor
   Serial.begin(115200);
+  delay(1000);
   while (!Serial);
-  Serial.println("LoRa Receiver");
 
   //setup LoRa transceiver module
   LoRa.setPins(ss, rst, dio0);
@@ -45,6 +45,11 @@ void setup() {
   // The sync word assures you don't get LoRa messages from other LoRa transceivers
   // ranges from 0-0xFF
   LoRa.setSyncWord(0xF3);
+  Serial.println("--------------------------------");
+  Serial.println(" Bharat Pi LoRa Test Program");
+  Serial.println(" Function: Receiver");
+  Serial.println("--------------------------------");
+  Serial.println("LoRa Receiver");  
   Serial.println("LoRa Initializing OK!");
 }
 
@@ -53,7 +58,7 @@ void loop() {
   int packetSize = LoRa.parsePacket();
   if (packetSize) {
     // received a packet
-    Serial.print("Received packet '");
+    Serial.print("Received packet: '");
 
     // read packet
     while (LoRa.available()) {
