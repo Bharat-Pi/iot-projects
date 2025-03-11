@@ -33,7 +33,7 @@
 #define TINY_GSM_RX_BUFFER 1024
 
 #define TINY_GSM_TEST_SMS true
-#define SMS_TARGET1  "9880721666" //Enter you phone number to which you would like to recevied SMS
+#define SMS_TARGET1  "9845012345" //Dummy phone numner....replace this with yout phone number to which you would like to recevied SMS
 //You can add multiple phone number to get SMS
 //#define SMS_TARGET2  "xxxxxxxxxx" //Enter you phone number to which you would like to recevied SMS
 //#define SMS_TARGET3  "xxxxxxxxxx" //Enter you phone number to which you would like to recevied SMS
@@ -48,7 +48,7 @@
 //BSNL -> "bsnlnet" 
 //Voda -> portalnmms
 //jio -> jionet
-const char apn[]  = "airtelgprs.com"; 
+const char apn[]  = "jionet"; //"airtelgprs.com"; 
 const char gprsUser[] = "";
 const char gprsPass[] = "";
 
@@ -109,7 +109,7 @@ void setup(){
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, LOW);
 
-  delay(100);
+  delay(5000);
 
   modemPowerOn();
   SerialAT.begin(UART_BAUD, SERIAL_8N1, PIN_RX, PIN_TX);
@@ -133,7 +133,8 @@ void setup(){
     delay(2000);
     Serial.println("Failed to restart modem, attempting to continue without restarting");
     digitalWrite(LED_PIN, LOW);
-    return;
+    Serial.println("Continuing without modem init for now...");
+    //return;
   }
 
   //Blue LED on the board use as an indicator
@@ -245,6 +246,46 @@ void setup(){
   Serial.println("");
   Serial.println("");  
 
+    if(modem.isNetworkConnected()){
+    Serial.println("Mobile Network is connected.......");
+  }  
+
+  //GPRS connection parameters are usually set after network registration
+  // SerialMon.print(F("Connecting to APN: "));
+  // SerialMon.print(apn);
+  // if (!modem.gprsConnect(apn, "", "")) {
+  //   Serial.println("APN connect failed");
+  //   delay(10000);
+  //   return;
+  // }
+  // Serial.println("APN connect success");
+
+  if (modem.isGprsConnected()) { 
+    Serial.println("");
+    Serial.println("GPRS network is connected");
+  }
+  Serial.println("");
+  Serial.println("");
+
+//Jio specific message centre number setting
+  Serial.println("Configuring message centre number, this is specific if using Jio sim in karnataka");
+  modem.sendAT("+CSCA=\"+917012075009\""); //init HTTP
+  if (modem.waitResponse(10000L) != 1) {
+    Serial.println("ERROR: MESSAGE CENTRE NUMBER UPDATE FAILED!");
+    DBG("+CSCA=+917012075009");
+  }
+
+  Serial.println();
+
+  Serial.println("Fetching message centre number details...");
+  modem.sendAT("+CSCA?"); //init HTTP
+  if (modem.waitResponse(10000L) != 1) {
+    Serial.println("ERROR: MESSAGE CENTRE NUMBER CHECK FAILED!");
+    DBG("+CSCA?");
+  }
+
+  Serial.println();
+
   delay(2000);
   Serial.println("Testing the a sample HTTPS Call to pipe drive server...");
   Serial.println("NOTE: Please ensure to deploy an end point on Pipe Dream (pipedream.com) to test. Example: " + send_data_to_url);
@@ -316,7 +357,10 @@ void setup(){
   //Serial.println(SMS_TARGET3);
 
   #if TINY_GSM_TEST_SMS && defined TINY_GSM_MODEM_HAS_SMS && defined SMS_TARGET1 
+    Serial.print("Sending SMS... please wait ");
     res = modem.sendSMS(SMS_TARGET1, String(modemInfo));
+    Serial.print("Send SMS returned: ");
+    Serial.println(res);
     DBG("SMS sent status:", res ? "SUCCESS" : "FAILED");
     delay(2000);
 
@@ -406,6 +450,7 @@ void setup(){
     Serial.println("######### Could not find SIMCOM A7672S Module! ##########");
   }
   Serial.println(">>>>> End of 4G Module Testing <<<<<<");
+  Serial.println(">>>>> Testing GNSS Latching, it might take sometime to latch depending on <<<<<<");
 }
 
 
